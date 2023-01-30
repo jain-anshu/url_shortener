@@ -1,0 +1,25 @@
+#! /usr/bin/env ruby
+puts "Enter your email: "
+email = gets.chomp
+user = User.find_by(email: email)
+puts "User: #{user.id}"
+option = ""
+while option != '1' && option != '2'
+  p "What do you want to do?"
+  p "1. Create shortened Url"
+  p "2. Visit shortened Url"
+  option = gets.chomp
+end
+
+if option == '1'
+p "Type in long url"
+  url = gets.chomp
+  shortened_url = ShortenedUrl.new().factory_method(user, url)
+  puts shortened_url.short_url
+else
+  p "Type in the shortened url"
+  short_url = gets.chomp
+  surl_row = ShortenedUrl.find_by(short_url: short_url)
+  Launchy.open( surl_row.long_url)
+end
+
